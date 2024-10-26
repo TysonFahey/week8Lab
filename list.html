@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hello List</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Add vue-->
+  </head>
+  <body>
+    <div id="app">
+      <h1>Task List</h1>
+
+      <h2>Enter new task</h2>
+      <label>Enter todo</label>
+      <input v-model="newtask"/> <!-- user input-->
+      <br>
+      <button v-on:click="addTask">Add task</button> <!-- Button for user to click after entering their new task-->
+      <ul>
+        <h2>Task List</h2>
+        <li v-for="task in taskList">{{task}}</li> <!-- Create a list element for each new task made-->
+      </ul>
+    </div>
+    <script>
+      const { createApp, ref } = Vue; 
+
+      createApp({ // createApp function 
+        setup() {
+          const taskList = ref(["Water plants", "Pay Bill", "Wash floor"]); // initial task list
+          const newtask = ref('') // new task empty string
+          function addTask(){ // create function for adding new task 
+            //add new task 
+            if (newtask.value){ // if newtask has a value 
+            taskList.value.push(newtask.value) // push(add) new task to the end of the list
+            newtask.value = '' // make the input blank again so user doesn't have to manually delete
+          }
+        }
+          return { // return the following functions
+            taskList,
+            newtask,
+            addTask
+          };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

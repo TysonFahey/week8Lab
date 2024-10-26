@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hello vue</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Add vue-->
+  </head>
+  <body>
+    <div id="app">
+      <!-- Vue will manage all the HTML here. -->
+
+      <h1>Hello Vue!</h1>
+
+      <p>{{messageWithExPts}}</p> <!-- paragraph where the message with exlamation points will be -->
+
+      <button v-on:click="addExclamationPoints">Add Exclimation Points</button> <!-- button; once clicked, an exclamation point will be added-->
+      <button v-on:click="clearExPts">Clear</button> <!--Button; once clicked, the exlamation points previously added will be cleared-->
+    </div>
+
+    <script>
+      // set up vue app
+
+      const { createApp, ref, computed} = Vue;
+
+      createApp({
+        setup() {
+          // define things the vue app needs here
+
+          const message = ref("Hi"); // set the message to Hi
+          const numberOfEx = ref(0); // message originally has one exclamation points thats why we have ref(1)
+
+          function addExclamationPoints() { // function to add exlamaiton points to use in button
+            if (numberOfEx.value < 10) { // allow the user to add up to 10 exclamation points
+              numberOfEx.value++; // add 1 to the running total
+            } else { // if the user has added a total of 10, don't let them and alert it 
+              alert("No more!");
+            }
+          }
+          function clearExPts() { // function to clear the exclamation points
+            numberOfEx.value = 0;
+           
+          }
+
+          const messageWithExPts = computed( function() {
+            let computedMessage = message.value // 
+            // add ! based on numberofex
+            for (let x = 0; x < numberOfEx.value; x++){ 
+                computedMessage = computedMessage + '!'
+            }
+            return computedMessage
+          })
+
+          return { // return the following functions
+            message,
+            numberOfEx,
+            messageWithExPts,
+            addExclamationPoints,
+            clearExPts,
+          };
+        },
+      }).mount("#app"); // conect vue app to html id
+    </script>
+  </body>
+</html>

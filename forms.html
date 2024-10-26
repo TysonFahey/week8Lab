@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hello Vue Forms</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Add vue-->
+  </head>
+  <body>
+    <div id="app">
+      <label>Please enter your name:</label>
+
+      <input v-model="name" />
+      <!-- user input to enter their name-->
+
+      <p v-if="name">Thanks, {{name}}</p>
+      <!-- If name holds a value-->
+      <p v-else>Awaiting user input</p>
+      <!-- if there is no input from user, display this message-->
+
+      <button v-on:click="clearName">Clear Name</button>
+      <!-- Button to clear their name when clicked-->
+    </div>
+
+    <script>
+      const { createApp, ref } = Vue;
+
+      createApp({
+        setup() {
+          const name = ref(""); // empty string
+          function clearName() {
+            // function to clear the name input with a button
+            name.value = ""; // set the name to an empty string
+          }
+          return {
+            // return the following functions
+            name,
+            clearName,
+          };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>
